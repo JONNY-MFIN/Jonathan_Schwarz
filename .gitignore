@@ -1,0 +1,22 @@
+# Data (licensed, not redistributed)
+*.csv
+*.xlsx
+*.parquet
+
+# Generated outputs
+figs/
+output/
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+
+# Notebook outputs
+figures/
+tables/
+
+# Packaging / tooling
+*.egg-info/
+build/
+.ruff_cache/

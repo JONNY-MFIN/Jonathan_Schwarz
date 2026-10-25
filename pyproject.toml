@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantfin"
+version = "1.0.0"
+description = "Quantitative finance projects from the MSc in Finance at Nova SBE"
+readme = "README.md"
+authors = [{ name = "Jonathan Schwarz" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=2.0",  # np.trapezoid
+    "pandas>=2.2",
+    "scipy>=1.13",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "openpyxl>=3.1",  # reads the credit VaR input workbook
+]
+
+[project.optional-dependencies]
+dev = ["jupyter", "ruff", "pytest>=8", "mypy>=1.10", "pandas-stubs"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+quantfin = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src", "tests"]
+strict = true
+warn_unused_ignores = true
+# pandas-stubs types many DataFrame operations as Any; every other strict check stays on.
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = ["scipy.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# Notebooks: imports where first needed, aligned figure code, unicode labels.
+"*.ipynb" = ["E402", "E501", "RUF001", "RUF003"]
